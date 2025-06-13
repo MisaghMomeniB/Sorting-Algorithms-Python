@@ -1,171 +1,158 @@
-# 🎉 **Sorting Algorithms in Python** 💻✨
+# 🔢 Sorting Algorithms in Python
 
-Welcome to the ultimate sorting showdown! In this Python script, we’ve got five **legendary sorting algorithms** going head-to-head:  
-**Bubble Sort**, **Selection Sort**, **Insertion Sort**, **Quick Sort**, and **Merge Sort**. Each one has its own style and strategy, but in the end, they all deliver a sorted array. 🤩
+A curated collection of classic **sorting algorithm implementations** in Python, designed for learning, comparison, and educational use.
 
 ---
 
-## 1. 🫧 **Bubble Sort** – The Gentle Giant
+## 📋 Table of Contents
 
-Bubble Sort might not be the fastest, but it’s classic and easy to understand. It compares adjacent elements and swaps them if they’re in the wrong order. Think of it as a "bubble" floating to the top – it keeps moving until it’s in its rightful place!
+1. [Overview](#overview)  
+2. [Algorithms Implemented](#algorithms-implemented)  
+3. [Installation & Setup](#installation--setup)  
+4. [Usage & Examples](#usage--examples)  
+5. [Performance Comparison](#performance-comparison)  
+6. [Code Structure](#code-structure)  
+7. [Testing](#testing)  
+8. [Contributing](#contributing)  
+9. [License](#license)
+
+---
+
+## 💡 Overview
+
+This repository presents a series of **classical sorting algorithms** implemented in plain Python. Each algorithm includes:
+
+- Clean functional or class-based structure  
+- Docstrings and inline comments explaining the key steps  
+- Example usage and testcase scaffolding  
+
+Great for algorithm study, teaching, or benchmarking.
+
+---
+
+## ✅ Algorithms Implemented
+
+- **Bubble Sort**  
+- **Insertion Sort**  
+- **Selection Sort**  
+- **Merge Sort**  
+- **Quick Sort**  
+- **Heap Sort**  
+- **Counting Sort** (integer arrays)  
+- **Radix Sort** (integer arrays)  
+- **TimSort**-like built on Python’s built-in `sorted()` (for reference)
+
+---
+
+## ⚙️ Installation & Setup
+
+```bash
+git clone https://github.com/MisaghMomeniB/Sorting-Algorithms-Python.git
+cd Sorting-Algorithms-Python
+python3 --version # Requires Python 3.7+
+````
+
+No external dependencies—everything runs with the Python standard library.
+
+---
+
+## 🚀 Usage & Examples
+
+Each algorithm script can be run directly or imported:
+
+```bash
+python bubble_sort.py
+```
+
+Example of using it in your code:
 
 ```python
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        for j in range(0, n-i-1):  # Traverse through the unsorted portion
-            if arr[j] > arr[j+1]:  # Compare adjacent elements
-                arr[j], arr[j+1] = arr[j+1], arr[j]  # Swap if out of order
-    return arr
+from merge_sort import merge_sort
+
+arr = [5, 2, 9, 1, 5, 6]
+sorted_arr = merge_sort(arr)
+print(sorted_arr)  # [1, 2, 5, 5, 6, 9]
 ```
 
-🔍 **How it works:**  
-Bubble Sort walks through the array and pushes larger values toward the end, like bubbles popping to the surface. It keeps doing this until no more swaps are needed. 🚶‍♂️
+Compare algorithms in `benchmark.py` with configurable input sizes:
 
----
-
-## 2. 🔎 **Selection Sort** – The Strategist
-
-Selection Sort is like choosing the best player for the team. It goes through the entire list and selects the smallest (or largest) element, placing it in its correct position, then continues with the rest. 🏅
-
-```python
-def selection_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        min_idx = i
-        for j in range(i+1, n):  # Find the minimum element in the unsorted part
-            if arr[j] < arr[min_idx]:  # If current element is smaller, update min_idx
-                min_idx = j
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]  # Swap the found min with the first unsorted element
-    return arr
-```
-
-🔍 **How it works:**  
-This algorithm selects the smallest element from the unsorted part and places it at the beginning. It keeps doing that for each position until the list is sorted. 🏆
-
----
-
-## 3. ✋ **Insertion Sort** – The Diligent Worker
-
-Insertion Sort is like organizing a deck of cards. You pick one card at a time, insert it in the correct position in the already sorted part, and then continue. 🔄
-
-```python
-def insertion_sort(arr):
-    for i in range(1, len(arr)):
-        key = arr[i]
-        j = i - 1
-        while j >= 0 and key < arr[j]:  # Move elements of arr[0..i-1] that are greater than key to one position ahead
-            arr[j + 1] = arr[j]
-            j -= 1
-        arr[j + 1] = key  # Place key after the last element smaller than it
-    return arr
-```
-
-🔍 **How it works:**  
-Insertion Sort builds a sorted list by inserting elements one by one into their correct positions. Like a super-organized worker making sure everything is in order. 🔧
-
----
-
-## 4. ⚡ **Quick Sort** – The Speedster
-
-Quick Sort is a high-speed, divide-and-conquer algorithm. It picks a **pivot**, divides the array into smaller parts, and recursively sorts them. It’s like splitting a problem into manageable chunks and solving each part. 🔥
-
-```python
-def quick_sort(arr):
-    if len(arr) <= 1:  # Base case: if the list has one or zero elements, it's already sorted
-        return arr
-    pivot = arr[len(arr) // 2]  # Choose the middle element as the pivot
-    left = [x for x in arr if x < pivot]  # Elements smaller than pivot
-    middle = [x for x in arr if x == pivot]  # Elements equal to pivot
-    right = [x for x in arr if x > pivot]  # Elements greater than pivot
-    return quick_sort(left) + middle + quick_sort(right)  # Recursively sort and combine
-```
-
-🔍 **How it works:**  
-Quick Sort’s power lies in its recursive strategy. It divides the list into smaller sub-lists based on a pivot, sorting them, and then combines everything back together. 🚀
-
----
-
-## 5. 🔄 **Merge Sort** – The Master of Divide and Conquer
-
-Merge Sort is the tactician’s favorite. It divides the array into halves, sorts them individually, and then merges them back together in sorted order. It’s an efficient, **divide-and-conquer** approach that always gets the job done. ⚔️
-
-```python
-def merge_sort(arr):
-    if len(arr) > 1:  # Only sort if the list has more than one element
-        mid = len(arr) // 2
-        left_half = arr[:mid]
-        right_half = arr[mid:]
-        merge_sort(left_half)  # Sort the left half
-        merge_sort(right_half)  # Sort the right half
-        i = j = k = 0
-        while i < len(left_half) and j < len(right_half):  # Merge the sorted halves
-            if left_half[i] < right_half[j]:
-                arr[k] = left_half[i]
-                i += 1
-            else:
-                arr[k] = right_half[j]
-                j += 1
-            k += 1
-        while i < len(left_half):  # If there are remaining elements in left_half
-            arr[k] = left_half[i]
-            i += 1
-            k += 1
-        while j < len(right_half):  # If there are remaining elements in right_half
-            arr[k] = right_half[j]
-            j += 1
-            k += 1
-    return arr
-```
-
-🔍 **How it works:**  
-Merge Sort takes the "divide and conquer" approach, splitting the list until each sub-list is sorted, then merging them back together in a sorted order. Like an army of tiny armies uniting into one! ⚔️
-
----
-
-## 🔥 **Test Run the Algorithms!** 🚀
-
-Let’s see these algorithms in action! We’ll test them on the same unsorted array:
-
-```python
-arr = [64, 25, 12, 22, 11]
-print("Bubble Sort:", bubble_sort(arr[:]))
-print("Selection Sort:", selection_sort(arr[:]))
-print("Insertion Sort:", insertion_sort(arr[:]))
-print("Quick Sort:", quick_sort(arr[:]))
-print("Merge Sort:", merge_sort(arr[:]))
+```bash
+python benchmark.py --size 10000 --runs 5
 ```
 
 ---
 
-### 📈 **Sample Output**:
+## 📊 Performance Comparison
+
+Benchmarks are provided in `benchmark.py` to measure:
+
+* Time complexity (best/average/worst cases)
+* Memory usage
+* Behavior with randomized vs. nearly-sorted data
+
+Results output to console and saved as `benchmark_results.csv`.
+
+---
+
+## 📁 Code Structure
 
 ```
-Bubble Sort: [11, 12, 22, 25, 64]
-Selection Sort: [11, 12, 22, 25, 64]
-Insertion Sort: [11, 12, 22, 25, 64]
-Quick Sort: [11, 12, 22, 25, 64]
-Merge Sort: [11, 12, 22, 25, 64]
+Sorting-Algorithms-Python/
+├── bubble_sort.py
+├── insertion_sort.py
+├── selection_sort.py
+├── merge_sort.py
+├── quick_sort.py
+├── heap_sort.py
+├── counting_sort.py
+├── radix_sort.py
+├── tim_sort.py
+├── benchmark.py          # Compare runtimes
+└── README.md
+```
+
+Each algorithm implements:
+
+* A function (e.g., `def quick_sort(arr)`)
+* Docstrings explaining time/space complexity
+* Standalone `__main__` for demo
+
+---
+
+## 🧪 Testing
+
+Basic assertions included in each algorithm’s `__main__`. To run all tests:
+
+```bash
+python benchmark.py --test
+```
+
+Or add **pytest** later:
+
+```bash
+pip install pytest
+pytest .
 ```
 
 ---
 
-## 🌟 **Conclusion**: Who’s the Best? 🤔
+## 🤝 Contributing
 
-While all five algorithms correctly sort the list, some are faster or more efficient than others, depending on the size and nature of the data. Here's a quick guide to when each one shines:
+Contributions welcomed! Ideas:
 
-- **Bubble Sort**: Easy to understand but slow. Use it for small datasets. 🐢
-- **Selection Sort**: Works best for small arrays but isn’t the fastest. 🏅
-- **Insertion Sort**: Great for nearly sorted arrays, but not the fastest for large ones. ✋
-- **Quick Sort**: Fast, efficient, and often the go-to choice for large datasets. ⚡
-- **Merge Sort**: Stable and efficient for large datasets with guaranteed O(n log n) time complexity. 🔄
+* Add additional sorts (e.g., Shell Sort, Bucket Sort)
+* Implement in in-place vs. functional variants
+* Enhance performance profiling
+* Add visualizations (e.g., Matplotlib animation)
+
+To contribute:
+
+1. Fork the repo
+2. Create a feature branch (`feature/...`)
+3. Submit a clean Pull Request with descriptive title
 
 ---
 
-### 🎉 **Happy Sorting!** 🚀
+## 📄 License
 
-Let these algorithms help you sort your way to success! 🏆 Happy coding and keep pushing the limits! 💪😎
-
----
-
-Feel free to add this to your GitHub repo! It’s both fun and informative! 🌟
+Distributed under **MIT License**. See `LICENSE` file for details.
